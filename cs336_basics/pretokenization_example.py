@@ -116,5 +116,19 @@ with open("your_file_path.txt", "rb") as f:
         # 3. 使用ignore可以跳过这些无效字符,而不是抛出UnicodeDecodeError异常
         # 4. 虽然会丢失一些数据,但可以保证程序继续运行
         # 5. 对于预训练任务来说,丢失少量无效字符的影响通常可以接受
+        # 读取边界问题说明:
+        # 1. f.read(end - start)会精确读取从start到end之间的字节
+        # 2. start边界是上一个分隔符的位置(包含分隔符)
+        # 3. end边界是下一个分隔符的位置(不包含分隔符)
+        # 4. 这样可以确保:
+        #    - 每个chunk都包含完整的分隔符
+        #    - 相邻chunk之间不会重复或遗漏内容
+        #    - 分隔符可以作为chunk的边界标记
+        # 读取字节范围说明:
+        # 1. f.read(end - start)会读取从当前位置开始的(end - start)个字节
+        # 2. 例如start=0, end=3时:
+        #    - 会读取3个字节(0,1,2)
+        #    - 不会读取位置3的字节
+        # 3. 这符合Python的切片规则:[start:end]包含start但不包含end
         chunk = f.read(end - start).decode("utf-8", errors="ignore")
         # Run pre-tokenization on your chunk and store the counts for each pre-token
