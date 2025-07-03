@@ -543,20 +543,19 @@ def get_tokenizer(
     merges: list[tuple[bytes, bytes]],
     special_tokens: list[str] | None = None,
 ) -> Any:
-    """Given a vocabulary, a list of merges, and a list of special tokens,
-    return a BPE tokenizer that uses the provided vocab, merges, and special tokens.
+    """给定词汇表、合并规则列表和特殊标记列表,
+    返回一个使用提供的词汇表、合并规则和特殊标记的BPE分词器。
 
-    Args:
-        vocab (dict[int, bytes]): The tokenizer vocabulary, a mapping from int (token ID in the vocabulary)
-            to bytes (token bytes)
-        merges (list[tuple[bytes, bytes]]): BPE merges. Each list item is a tuple of bytes (<token1>, <token2>),
-            representing that <token1> was merged with <token2>.
-            Merges are ordered by order of creation.
-        special_tokens (list[str] | None): A list of string special tokens for the tokenizer. These strings will never
-            be split into multiple tokens, and will always be kept as a single token.
+    参数:
+        vocab (dict[int, bytes]): 分词器词汇表,是从整数(词汇表中的标记ID)到字节(标记字节)的映射
+        merges (list[tuple[bytes, bytes]]): BPE合并规则。列表中的每一项都是一个字节元组(<token1>, <token2>),
+            表示<token1>与<token2>被合并。
+            合并规则按创建顺序排列。
+        special_tokens (list[str] | None): 分词器的特殊标记字符串列表。这些字符串永远不会
+            被分割成多个标记,而是始终作为单个标记保留。
 
-    Returns:
-        A BPE tokenizer that uses the provided vocab, merges, and special tokens.
+    返回:
+        使用提供的词汇表、合并规则和特殊标记的BPE分词器。
     """
     raise NotImplementedError
 
@@ -567,25 +566,22 @@ def run_train_bpe(
     special_tokens: list[str],
     **kwargs,
 ) -> tuple[dict[int, bytes], list[tuple[bytes, bytes]]]:
-    """Given the path to an input corpus, run train a BPE tokenizer and
-    output its vocabulary and merges.
+    """给定输入语料库的路径,训练一个BPE分词器并输出其词汇表和合并规则。
 
-    Args:
-        input_path (str | os.PathLike): Path to BPE tokenizer training data.
-        vocab_size (int): Total number of items in the tokenizer's vocabulary (including special tokens).
-        special_tokens (list[str]): A list of string special tokens to be added to the tokenizer vocabulary.
-            These strings will never be split into multiple tokens, and will always be
-            kept as a single token. If these special tokens occur in the `input_path`,
-            they are treated as any other string.
+    参数:
+        input_path (str | os.PathLike): BPE分词器训练数据的路径。
+        vocab_size (int): 分词器词汇表中的总项目数(包括特殊标记)。
+        special_tokens (list[str]): 要添加到分词器词汇表中的特殊标记字符串列表。
+            这些字符串永远不会被分割成多个标记,而是始终作为单个标记保留。
+            如果这些特殊标记出现在`input_path`中,它们会被当作普通字符串处理。
 
-    Returns:
+    返回:
         tuple[dict[int, bytes], list[tuple[bytes, bytes]]]:
             vocab:
-                The trained tokenizer vocabulary, a mapping from int (token ID in the vocabulary)
-                to bytes (token bytes)
+                训练好的分词器词汇表,是从整数(词汇表中的标记ID)到字节(标记字节)的映射
             merges:
-                BPE merges. Each list item is a tuple of bytes (<token1>, <token2>),
-                representing that <token1> was merged with <token2>.
-                Merges are ordered by order of creation.
+                BPE合并规则。列表中的每一项都是一个字节元组(<token1>, <token2>),
+                表示<token1>与<token2>被合并。
+                合并规则按创建顺序排列。
     """
     raise NotImplementedError
